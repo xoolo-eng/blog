@@ -1,25 +1,10 @@
 from django.shortcuts import render
 from django.urls.base import reverse
 from user.forms import UserSignIn, UserLogIn
-
-# from django.views import View
 from django.views.generic.edit import FormView
 from django.shortcuts import redirect
 from django.contrib.auth import logout as log_out
 from django.contrib.auth.decorators import login_required
-
-
-# def login(request):
-#     if not request.user.is_anonymous:
-#         return redirect("home_page")
-#     context = {"login_form": UserLogIn()}
-#     if request.method == "POST":
-#         user_form = UserLogIn(request.POST)
-#         if user_form.is_valid():
-#             user_form.login(request)
-#             return redirect("home_page")
-#         context.update(login_form=user_form)
-#     return render(request, "login.html", context)
 
 
 @login_required(login_url="login_page")

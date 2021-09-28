@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block blog %}
+{% if not user.is_anonymous %}
+<div class="offset-lg-3 col-lg-4 col-md-6">
+    <div class="course-form-section">
+        <h3 class="">Courses for Free</h3>
+        <p class="">It is high time for learning</p>
+        <form class="course-form-area contact-page-form course-form text-right" id="myForm"
+            action="{% url 'create_post_page' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" value="{{user.id}}" name="author" />
+            {% if form.non_field_errors %}
+            <div class="form-group col-md-12">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+            {% if form.title.errors %}
+            <div class="form-group col-md-12">
+                {{ form.title.errors }}
+            </div>
+            {% endif %}
+            <div class="form-group col-md-12">
+                {{ form.title.label }}
+                {{ form.title }}
+            </div>
+            {% if form.text.errors %}
+            <div class="form-group col-md-12">
+                {{ form.text.errors }}
+            </div>
+            {% endif %}
+            <div class="form-group col-md-12">
+                {{ form.text.label }}
+                {{ form.text }}
+            </div>
+            {% if form.tags.errors %}
+            <div class="form-group col-md-12">
+                {{ form.tags.errors }}
+            </div>
+            {% endif %}
+            <div class="form-group col-md-12">
+                {{ form.tags.label }}
+                {{ form.tags }}
+            </div>
+            <div class="col-lg-12 text-center">
+                <button class="btn text-uppercase">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% else %}
+<p>Только для зарегистрированных пользователей</p>
+{% endif %}
+{% endblock blog %}
