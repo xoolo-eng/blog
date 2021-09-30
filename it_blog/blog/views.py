@@ -3,7 +3,7 @@ from django.http import HttpResponseForbidden
 from django.views.generic.edit import FormView
 from blog.forms import CreatePost
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from blog.models import Post
 
 
@@ -17,12 +17,17 @@ class AllPosts(ListView):
     template_name = "all_blogs.html"
 
 
+def single_blog(request, pk):
+    context = {"post": Post.objects.get(id=pk)}
+    context["post"].views += 1
+    context["post"].save()
+    return render(request, "single_blog.html", context)
 
 
 class NewPost(LoginRequiredMixin, FormView):
     template_name = "create_blog.html"
     form_class = CreatePost
-    login_url = '/user/login/'
+    login_url = "/user/login/"
     success_url = "/blog/"
 
     def form_valid(self, form):
